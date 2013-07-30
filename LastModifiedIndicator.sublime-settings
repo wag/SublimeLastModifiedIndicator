@@ -1,0 +1,8 @@
+{
+  // enable (true) or disable (false) the plugin
+  "last_modified_indicator": true,
+
+  // show the indicator over multiple lines (7 of them),
+  // alternatively only on the last modified line
+  "last_modified_indicator_multiline": true
+}

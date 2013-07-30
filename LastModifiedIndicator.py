@@ -3,21 +3,37 @@ import sublime
 import os
 
 IMG_PATH = os.path.join('..', 'LastModifiedIndicator', 'img')
-
+settings = sublime.load_settings('LastModifiedIndicator.sublime-settings')
 
 class LastModifiedIndicator(object):
     def __init__(self, view):
         self.view = view
+        self.sel = self.view.sel()
+        self.has_sel = len(self.sel) == 1
+
+    @property
+    def _range(self):
+        return range(-3, 4) if settings.get('last_modified_indicator_multiline', True) else range(0, 1)
 
     def run(self):
-        sel = self.view.sel()
-        if len(sel) == 1 and self.view.settings().get('last_modified_indicator'):
+        if self.has_sel:
+            self.erase_regions()
             line = self.view.rowcol(self.view.sel()[0].begin())[0]
+            for i in self._range:
+                _line = line + i
+                if _line < 0:
+                    continue
+                point = self.view.full_line(self.view.text_point(_line, 0))
+                self.view.add_regions('lmi-outline-%d' % i, [point, ], 'lmi.outline.%d' % i,
+                    os.path.join(IMG_PATH, str(abs(i))), sublime.HIDDEN)
+
+    def erase_regions(self):
+        if self.has_sel:
             for i in range(-3, 4):
-                point = self.view.full_line(self.view.text_point(line + i, 0))
-                self.view.add_regions('lmi-outline-%d' % i, [point, ], 'lmi.outline.%d' % i, os.path.join(IMG_PATH, str(abs(i))), sublime.HIDDEN)
+                self.view.erase_regions('lmi-outline-%d' % i)
 
 
 class LastModifiedIndicatorEventHandler(sublime_plugin.EventListener):
     def on_modified(self, view):
-        LastModifiedIndicator(view).run()
+        if settings.get('last_modified_indicator', True):
+            LastModifiedIndicator(view).run()
