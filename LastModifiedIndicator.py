@@ -2,14 +2,14 @@ import sublime_plugin
 import sublime
 import os
 
-BASE_PATH = os.path.basename(os.path.abspath(os.path.dirname(__file__)))
+BASE_PATH = os.path.basename(os.path.abspath(os.path.dirname(__file__))).replace('.sublime-package', '')
 if int(sublime.version()) < 3014:
     PATH = '..'
-    EXTN = ''
+    EXT = ''
 else:
     PATH = 'Packages'
-    EXTN = '.png'
-IMG_PATH = '{0}/{1}/{2}'.format(PATH, BASE_PATH, 'img')
+    EXT = '.png'
+ICONS_PATH = '{0}/{1}/{2}'.format(PATH, BASE_PATH, 'icons')
 
 ALL_SETTINGS = [
     'last_modified_indicator',
@@ -71,7 +71,7 @@ class LastModifiedIndicator(object):
                 self.view.add_regions(
                     'lmi-outline-{0}'.format(i), [point, ],
                     'lmi.outline.{0}'.format(i),
-                    '{0}/{1}'.format(IMG_PATH, format(abs(i)) + EXTN),
+                    '{0}/{1}'.format(ICONS_PATH, format(abs(i)) + EXT),
                     sublime.HIDDEN)
 
 
