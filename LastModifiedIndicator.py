@@ -9,7 +9,7 @@ if int(sublime.version()) < 3014:
 else:
     PATH = 'Packages'
     EXTN = '.png'
-IMG_PATH = os.path.join(PATH, BASE_PATH, 'img').replace('\\', '/')
+IMG_PATH = '{0}/{1}/{2}'.format(PATH, BASE_PATH, 'img')
 
 ALL_SETTINGS = [
     'last_modified_indicator',
@@ -71,7 +71,7 @@ class LastModifiedIndicator(object):
                 self.view.add_regions(
                     'lmi-outline-{0}'.format(i), [point, ],
                     'lmi.outline.{0}'.format(i),
-                    os.path.join(IMG_PATH, format(abs(i)) + EXTN),
+                    '{0}/{1}'.format(IMG_PATH, format(abs(i)) + EXTN),
                     sublime.HIDDEN)
 
 
