@@ -14,7 +14,10 @@ ICONS_PATH = '{0}/{1}/{2}'.format(PATH, BASE_PATH, 'icons')
 ALL_SETTINGS = [
     'last_modified_indicator',
     'last_modified_indicator_multiline',
+    'last_modified_indicator_file_save_clear',
 ]
+
+SETTINGS = 'LastModifiedIndicator.sublime-settings'
 
 
 def settings_changed():
@@ -24,11 +27,14 @@ def settings_changed():
             erase_regions(view)
 
 
-def reload_settings(view):
-    settings = sublime.load_settings('LastModifiedIndicator.sublime-settings')
+def init_settings():
+    settings = sublime.load_settings(SETTINGS)
     settings.clear_on_change(__name__)
     settings.add_on_change(__name__, settings_changed)
 
+
+def reload_settings(view):
+    settings = sublime.load_settings(SETTINGS)
     view_settings = view.settings()
     for setting in ALL_SETTINGS:
         if settings.get(setting) is not None:
@@ -41,7 +47,7 @@ def reload_settings(view):
 
 
 def plugin_loaded():
-    settings_changed()
+    init_settings()
 
 
 def erase_regions(view):
@@ -90,4 +96,5 @@ class LastModifiedIndicatorEventHandler(sublime_plugin.EventListener):
             LastModifiedIndicator(view).run()
 
     def on_post_save(self, view):
-        erase_regions(view)
+        if view.settings().get('last_modified_indicator_file_save_clear', True):
+            erase_regions(view)
