@@ -17,33 +17,40 @@ ALL_SETTINGS = [
     'last_modified_indicator_file_save_clear',
 ]
 
-SETTINGS = 'LastModifiedIndicator.sublime-settings'
+user_settings = None
+lmi_settings = None
+settings = {}
+
+
+def init_settings():
+    globals()['user_settings'] = sublime.load_settings('Preferences.sublime-settings')
+    globals()['lmi_settings'] = sublime.load_settings('LastModifiedIndicator.sublime-settings')
+    lmi_settings.clear_on_change(__name__)
+    lmi_settings.add_on_change(__name__, settings_changed)
+    user_settings.clear_on_change(__name__)
+    user_settings.add_on_change(__name__, settings_changed)
+    settings_changed()
 
 
 def settings_changed():
+    for value in ALL_SETTINGS:
+        user_value = user_settings.get(value)
+        settings[value] = user_value if user_value is not None else lmi_settings.get(value)
+
     for window in sublime.windows():
         for view in window.views():
             reload_settings(view)
             erase_regions(view)
 
 
-def init_settings():
-    settings = sublime.load_settings(SETTINGS)
-    settings.clear_on_change(__name__)
-    settings.add_on_change(__name__, settings_changed)
-
-
 def reload_settings(view):
-    settings = sublime.load_settings(SETTINGS)
     view_settings = view.settings()
-    for setting in ALL_SETTINGS:
-        if settings.get(setting) is not None:
-            view_settings.set(setting, settings.get(setting))
+    for value in ALL_SETTINGS:
+        if settings.get(value) is not None:
+            view_settings.set(value, settings.get(value))
 
     if view_settings.get('last_modified_indicator') is None:
         view_settings.set('last_modified_indicator', True)
-
-    return view_settings
 
 
 def plugin_loaded():
@@ -63,7 +70,7 @@ class LastModifiedIndicator(object):
 
     @property
     def _range(self):
-        return range(-3, 4) if self.view.settings().get('last_modified_indicator_multiline', True) else range(0, 1)
+        return range(-3, 4) if settings.get('last_modified_indicator_multiline', True) else range(0, 1)
 
     def run(self):
         if self.has_sel:
@@ -92,9 +99,9 @@ class LastModifiedIndicatorEventHandler(sublime_plugin.EventListener):
         reload_settings(view)
 
     def on_modified(self, view):
-        if view.settings().get('last_modified_indicator', True):
+        if settings.get('last_modified_indicator', True):
             LastModifiedIndicator(view).run()
 
     def on_post_save(self, view):
-        if view.settings().get('last_modified_indicator_file_save_clear', True):
+        if settings.get('last_modified_indicator_file_save_clear', False):
             erase_regions(view)

@@ -30,4 +30,4 @@ The plugin can be configured by editing the file: `LastModifiedIndicator/LastMod
       "last_modified_indicator_multiline": true
 
       // clear the indicator after a file has been saved
-      "last_modified_indicator_file_save_clear": true,
+      "last_modified_indicator_file_save_clear": false,
