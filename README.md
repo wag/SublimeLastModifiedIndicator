@@ -20,7 +20,7 @@ Or download the [zip](https://github.com/wag/SublimeLastModifiedIndicator/archiv
 
 ## Settings
 
-The plugin can be configured by editing either the file `LastModifiedIndicator/LastModifiedIndicator.sublime-settings` or `Preferences.sublime-settings` (Preferences -> Settings - User).
+The plugin can be configured by editing the `Preferences.sublime-settings` (Preferences -> Settings - User) file. The options and their default values are the following:
 
       // enable (true) or disable (false) the plugin
       "last_modified_indicator": true,
