@@ -88,3 +88,6 @@ class LastModifiedIndicatorEventHandler(sublime_plugin.EventListener):
     def on_modified(self, view):
         if view.settings().get('last_modified_indicator', True):
             LastModifiedIndicator(view).run()
+
+    def on_post_save(self, view):
+        erase_regions(view)
