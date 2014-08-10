@@ -27,7 +27,7 @@ The plugin can be configured by editing the file: `LastModifiedIndicator/LastMod
 
       // show the indicator over multiple (seven) lines,
       // alternatively only on the last modified line
-      "last_modified_indicator_multiline": true
+      "last_modified_indicator_multiline": true,
 
       // clear the indicator after a file has been saved
       "last_modified_indicator_file_save_clear": false,
