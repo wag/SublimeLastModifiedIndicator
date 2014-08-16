@@ -31,3 +31,6 @@ The plugin can be configured by editing the `Preferences.sublime-settings` (Pref
 
       // clear the indicator after a file has been saved
       "last_modified_indicator_file_save_clear": false,
+
+## Problems
+If your ST hangs while upgrading, removing or disabling the package, close or save all unsaved files and try again. This is a bug which has been fixed in version 2014.08.10.10.51.15.
