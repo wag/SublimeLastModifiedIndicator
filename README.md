@@ -5,7 +5,7 @@ This plugin displays an indicator next to the last edited line so you'll immedia
 By default, the indicator stretches over seven lines around the last edited one to provide enough visual feedback.
 This can be reduced to only the last edited line by modifying the `last_modified_indicator_multiline` configuration entry.
 
-![example](https://www.dropbox.com/s/vsoadh639eztuzn/lasteditedindicator_example.png?dl=0)
+![example](https://raw.githubusercontent.com/wag/SublimeLastModifiedIndicator/master/lasteditedindicator_example.png)
 
 ## Installation
 
