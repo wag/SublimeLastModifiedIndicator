@@ -5,7 +5,7 @@ This plugin displays an indicator next to the last edited line so you'll immedia
 By default, the indicator stretches over seven lines around the last edited one to provide enough visual feedback.
 This can be reduced to only the last edited line by modifying the `last_modified_indicator_multiline` configuration entry.
 
-![example](https://dl.dropboxusercontent.com/u/50095156/lasteditedindicator_example.png)
+![example](https://www.dropbox.com/s/vsoadh639eztuzn/lasteditedindicator_example.png?dl=0)
 
 ## Installation
 
